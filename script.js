@@ -1,5 +1,8 @@
 // declare and define variables that refer to HTML elements
-
+let btn = document.querySelector(".startBtn");
+let time = document.querySelector(".time")
+let score = document.querySelector(".score")
+let test = document.querySelector(".test")
 
 // running time of the timer (during an iteration when the value changes)
 // necessary for countdown functionality
@@ -24,7 +27,29 @@ let list = ["the","quick","brown","fox","jumps","over","the","lazy","dog"];
  * countdown()
  * 
  */
+function countdown() {
+    timer = setInterval(function() {
+        seconds -= 1;
+        curr_time.innerHTML = seconds;
 
+        // timer ends
+        if (seconds <= 0) {
+            //ending alert
+            alert("game Over! Your score was " + points);
+
+            // resets all HTML elements
+            score.innerHMTL = "0";
+            test.innerHTML = "";
+            time.innerHTMl = "60";
+
+            game_active = false;
+
+            clearInterval(timer);
+            seconds = 60;
+            points = 0;
+        }
+    }, 1000);
+}
 
 
 
@@ -36,9 +61,30 @@ let list = ["the","quick","brown","fox","jumps","over","the","lazy","dog"];
  * random_word()
  * 
  */
+function random_word() {
+    let random = Math.floor(Math.random() * list.length);
+    let word = list[random].split("");
 
+    //clears any previous words/characters
+    test.innerHTML = "";
 
+    for (let i = 0; i < word.length; i++) {
+        //create an inline span container for the letter
+        let span = document.createElement("span");
+        //creates a class that applies to all of the spans that make up the word
+        span.classList.add("span");
 
+        //shows what a span is
+        span.style.border = "solid red";
+
+        //changes HTML of the span to show each letter
+        span.innerHTML = word[i];
+        test.appendChild(span);
+    }
+
+    // defines a variable that refers to all spans     
+    spans = document.querySelectorAll(".span");
+} 
 
 
 /*
