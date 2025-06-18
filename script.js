@@ -114,11 +114,44 @@ btn.addEventListener("click", function() {
  * typing(event)
  * 
  */
+function typing(event) {
+    typed = event.key;
+    console.log(typed);
 
+    for (let i = 0; i < spans.length; i++) {
+        if (spans[i].innerHTML === typed) {
+            if ((spans[i].classList.contains("background") === false) && 
+                    (spans[i-1] === undefined || spans[i-1].classList.contains("background") === true)) {
+                spans[i].classList.add("background");
+                break;
+            }
+        }
+    }
 
+    let checker = 0;
+    for (let j = 0; j < spans.length; j++) {
+        //checker checks how many spans have background colors
+        if (spans[j].className === "span background") {
+            checker++;
+        }
+        //checks when the entire word is typed
+        if (checker === spans.length) {
+            //updates points
+            points = points + 1;
+            score.innerHTML = points;
 
+            //resets
+            //temporarily stops keyboard input during transition
+            document.removeEventListener("keydown", typing, false);
 
-
+            //re-enables keyboard input and gives new word after 200ms delay
+            setTimeout(function(){
+                random_word(); // give another word
+                document.addEventListener("keydown", typing, false);
+            }, 200);
+        }
+    }
+}
 
 
 //enables keyboard input (default)
